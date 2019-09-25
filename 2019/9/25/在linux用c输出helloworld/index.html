@@ -9,7 +9,7 @@
 
 
 
-<title>使用hexo踩的一些坑 | 杨浩然的博客</title>
+<title>在linux用c输出helloworld | 杨浩然的博客</title>
 
 
 
@@ -106,14 +106,14 @@
         <div id="post-toc" class="post-toc">
             <span class="post-toc-title">catalogue</span>
             <div class="post-toc-content">
-                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1关于Deployer-not-found-git"><span class="toc-text">1关于Deployer not found: git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2关于git的一个错误"><span class="toc-text">2关于git的一个错误</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3关于Cannot-GET-XXXX"><span class="toc-text">3关于Cannot GET /XXXX/</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4关于插入图片"><span class="toc-text">4关于插入图片</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装gcc"><span class="toc-text">安装gcc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写一个c程序并编译"><span class="toc-text">编写一个c程序并编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建可执行文件"><span class="toc-text">创建可执行文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#执行file"><span class="toc-text">执行file</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题和解决方法"><span class="toc-text">问题和解决方法</span></a></li></ol>
             </div>
         </div>
     
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">使用hexo踩的一些坑</h1>
+            <h1 class="post-title">在linux用c输出helloworld</h1>
             
                 <div class="post-meta">
                     
@@ -122,14 +122,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">July 10, 2019&nbsp;&nbsp;11:14:40</a>
+                        Date: <a href="#">September 25, 2019&nbsp;&nbsp;19:21:59</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/hexo/">hexo</a>
+                                <a href="/categories/linux/">linux</a>
                             
                         </span>
                     
@@ -138,26 +138,38 @@
         </header>
 
         <section class="post-content">
-            <p>使用hexo搭建个人博客的教程有很多，基本上大同小异，这里我主要写一下自己在搭建过程中踩的一些坑。</p>
-<h2 id="1关于Deployer-not-found-git"><a href="#1关于Deployer-not-found-git" class="headerlink" title="1关于Deployer not found: git"></a>1关于Deployer not found: git</h2><p>解决方法：安装插件hexo-deployer-git</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+            <p>使用gcc编译器编译执行</p>
+<h2 id="安装gcc"><a href="#安装gcc" class="headerlink" title="安装gcc"></a>安装gcc</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gcc</span><br></pre></td></tr></table></figure>
 
-<p>之前把这个插件删了导致部署到github失败</p>
-<h2 id="2关于git的一个错误"><a href="#2关于git的一个错误" class="headerlink" title="2关于git的一个错误"></a>2关于git的一个错误</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ RPC failed; curl 56 OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 10054</span><br></pre></td></tr></table></figure>
+<h2 id="编写一个c程序并编译"><a href="#编写一个c程序并编译" class="headerlink" title="编写一个c程序并编译"></a>编写一个c程序并编译</h2><img src="/2019/9/25/在linux用c输出helloworld/helloc.png" title="testpic">
 
-<p>可尝试一下解决方法</p>
-<p>1.升级git</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git update-git-for-windows</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -c helloworld.c</span><br></pre></td></tr></table></figure>
 
-<p>2.增加git缓冲区</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git config http.postBuffer 524288000</span><br></pre></td></tr></table></figure>
+<p>结果生成一个.o文件</p>
+<img src="/2019/9/25/在linux用c输出helloworld/helloo.png" title="testpic">
 
-<p>3.更换网络</p>
-<p>如果以上两种方法均不能解决问题，我建议换个网络试试。</p>
-<p>这个错误是我在老家搭博客时遇到的，可能是老家网络的问题，我换了手机热点后解决了。。。</p>
-<h2 id="3关于Cannot-GET-XXXX"><a href="#3关于Cannot-GET-XXXX" class="headerlink" title="3关于Cannot GET /XXXX/"></a>3关于Cannot GET /XXXX/</h2><p>一般的解决方法是在创建的页面里更改类型，但我改了以后还是不行，无奈之下只好删除整个blog文件从零开始，在未做任何配置文件的改动时，页面可以正常显示，在我先后修改了 <strong><em>主题配置文件</em></strong> 和 <strong><em>站点配置文件</em></strong> 的语言（language）和时区（timezone）后，有出现了cannot get 的错误，经过尝试，同时删除对 <strong><em>站点配置文件</em></strong> 的 <strong><em>language</em></strong> 和 <strong><em>timezone</em></strong> 修改后（两者保持默认），页面可以正常显示了，我也不知道这是什么原因（可能是两种设置冲突？）。</p>
-<h2 id="4关于插入图片"><a href="#4关于插入图片" class="headerlink" title="4关于插入图片"></a>4关于插入图片</h2><p>直接将 <strong><em>_config.yml</em></strong> 中的 <strong><em>post_asset_folder</em></strong> 配置改为 true （注意，不需要安装hexo-asset-image，我一开始安装后导致图片地址不对），之后在创建一个新文章是，会自动在_posts文件夹下创建一个与文章名同名的文件夹，将所需图片放入该文件夹下，按照引入图片的格式引入即可（图片的地址直接写 <strong><em>图片名字.图片格式</em></strong> ，前边不需要加上级文件夹即 <strong><em>XXX/</em></strong> ）。</p>
+<h2 id="创建可执行文件"><a href="#创建可执行文件" class="headerlink" title="创建可执行文件"></a>创建可执行文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -o file helloworld.o</span><br></pre></td></tr></table></figure>
 
+<p>生成一个名为的file文件</p>
+<img src="/2019/9/25/在linux用c输出helloworld/file.png" title="testpic">
+
+<h2 id="执行file"><a href="#执行file" class="headerlink" title="执行file"></a>执行file</h2><p>运行方法：路径/可执行文件名<br>我的文件就在当前目录，执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./file</span><br></pre></td></tr></table></figure>
+
+<p>输出helloworld</p>
+<img src="/2019/9/25/在linux用c输出helloworld/file.png" title="testpic">
+
+<h2 id="问题和解决方法"><a href="#问题和解决方法" class="headerlink" title="问题和解决方法"></a>问题和解决方法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">E: Could not get lock /var/lib/dpkg/lock-frontend - open (11: Resource temporarily unavailable)  </span><br><span class="line">E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend),   </span><br><span class="line">is another process using it?</span><br></pre></td></tr></table></figure>
+
+<p>出现这种问题的可能原因是</p>
+<p>1.想运行的程序或“Software Updater”(软件升级程序)已打开<br>2.一些apt命令正在终端中运行。<br>3.一些apt进程正在后台运行。</p>
+<p>解决<br>1.等待以上过程完成</p>
+<p>2.删除锁定文件</p>
+<p>先在终端执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo rm /var/lib/apt/lists/lock</span><br><span class="line">sudo rm /var/cache/apt/archives/lock</span><br><span class="line">sudo rm /var/lib/dpkg/lock*</span><br></pre></td></tr></table></figure>
+
+<p>重新配置软件包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg --configure -a</span><br><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
         </section>
 
         
@@ -171,7 +183,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://YHRmaple.github.io/2019/7/10/使用hexo踩的一些坑/">https://YHRmaple.github.io/2019/7/10/使用hexo踩的一些坑/</a></span>
+                        <span><a href="https://YHRmaple.github.io/2019/9/25/在linux用c输出helloworld/">https://YHRmaple.github.io/2019/9/25/在linux用c输出helloworld/</a></span>
                     </p>
                 
                 
@@ -195,7 +207,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/hexo/"># hexo</a>
+                        <a href="/tags/linux/"># linux</a>
                     
                         
                 </span>
@@ -208,10 +220,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2019/9/25/在linux用c输出helloworld/">在linux用c输出helloworld</a>
             
-            
-            <a class="next" rel="next" href="/2019/7/7/testblog/">testblog</a>
+            <a class="next" rel="next" href="/2019/7/10/使用hexo踩的一些坑/">使用hexo踩的一些坑</a>
             
         </section>
 
