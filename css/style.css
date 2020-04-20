@@ -149,7 +149,7 @@ template {
   font-weight: 300;
 }
 html {
-  font-family: 'Microsoft Jhenghei', Lantinghei SC, 'lanting', PingFang SC, Seguo UI, Microsoft Yahei, Arial;
+  font-family: Arial, Microsoft Yahei, SimSun, 'Microsoft Jhenghei', Lantinghei SC, 'lanting', PingFang SC, Seguo UI;
 }
 html::-webkit-scrollbar {
   width: 8px;
@@ -1275,4 +1275,10 @@ header label {
 }
 .highlight .code .emphasis {
   font-style: italic;
+}
+.gutter {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
 }
