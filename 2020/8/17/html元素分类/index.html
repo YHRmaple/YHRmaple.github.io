@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="杨浩然的博客">
+
+
+
+<title>html元素分类 | 杨浩然的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Yang Haoran&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Yang Haoran&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 导航</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+    <div id="post-toc" class="post-toc">
+        <span class="post-toc-title">目录</span>
+        <div class="post-toc-content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#块级元素"><span class="toc-text">块级元素</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#特点"><span class="toc-text">特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举例"><span class="toc-text">举例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转换"><span class="toc-text">转换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内联元素"><span class="toc-text">内联元素</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#特点-1"><span class="toc-text">特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举例-1"><span class="toc-text">举例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转换-1"><span class="toc-text">转换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内联块级元素"><span class="toc-text">内联块级元素</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#特点-2"><span class="toc-text">特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举例-2"><span class="toc-text">举例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转换-2"><span class="toc-text">转换</span></a></li></ol></li></ol>
+        </div>
+    </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">html元素分类</h1>
+            
+            <div class="post-meta">
+                
+                作者: <a itemprop="author" rel="author" href="/">杨浩然</a>
+                
+
+                
+                <span class="post-time">
+                    日期: <a href="#">August 17, 2020&nbsp;&nbsp;10:48:45</a>
+                </span>
+                
+                
+                <span class="post-category">
+                    分类:
+                    
+                    <a href="/categories/前端/">前端</a>
+                    
+                </span>
+                
+            </div>
+            
+        </header>
+
+        <section class="post-content">
+            <p>之前对于 HTML 的元素标签分类经常搞混，所以在这里做一个总结。大致可分为三种类型：<strong>块级元素（block），内联元素（又称行内元素，inline），内联块级元素（inline-block）</strong></p>
+<h2 id="块级元素"><a href="#块级元素" class="headerlink" title="块级元素"></a>块级元素</h2><h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
+<li>每个块级元素独占一行，后面的元素会另起一行。</li>
+<li>可以设置高度，宽度，行高，边框，内外边距。</li>
+<li>宽度默认为父容器的100%。</li>
+</ol>
+<h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><table>
+<thead>
+<tr>
+<th align="center">标签</th>
+<th align="center">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>&lt;address&gt;</code></td>
+<td align="center">定义地址</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;caption&gt;</code></td>
+<td align="center">定义表格标题</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;dd&gt;</code></td>
+<td align="center">定义列表中定义条目</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;div&gt;</code></td>
+<td align="center">定义文档中的分区或节</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;dl&gt;</code></td>
+<td align="center">定义列表</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;dt&gt;</code></td>
+<td align="center">定义列表中的项目</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;fieldset&gt;</code></td>
+<td align="center">定义一个框架集</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;form&gt;</code></td>
+<td align="center">创建 HTML 表单</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;h1&gt;……&lt;h6&gt;</code></td>
+<td align="center">定义标题</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;hr&gt;</code></td>
+<td align="center">创建一条水平线</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;legend&gt;</code></td>
+<td align="center">为 fieldset 元素定义标题</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;li&gt;</code></td>
+<td align="center">定义列表项目</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;noframes&gt;</code></td>
+<td align="center">为那些不支持框架的浏览器显示文本，于 frameset 元素内部</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;noscript&gt;</code></td>
+<td align="center">定义在脚本未被执行时的替代内容</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;ol&gt;</code></td>
+<td align="center">定义有序列表</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;ul&gt;</code></td>
+<td align="center">定义无序列表</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;p&gt;</code></td>
+<td align="center">标签定义段落</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;pre&gt;</code></td>
+<td align="center">定义预格式化的文本</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;table&gt;</code></td>
+<td align="center">标签定义 HTML 表格</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;tbody&gt;</code></td>
+<td align="center">标签表格主体（正文）</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;td&gt;</code></td>
+<td align="center">表格中的标准单元格</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;tfoot&gt;</code></td>
+<td align="center">定义表格的页脚（脚注或表注）</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;th&gt;</code></td>
+<td align="center">定义表头单元格</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;thead&gt;</code></td>
+<td align="center">标签定义表格的表头</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;tr&gt;</code></td>
+<td align="center">定义表格中的行</td>
+</tr>
+</tbody></table>
+<h3 id="转换"><a href="#转换" class="headerlink" title="转换"></a>转换</h3><p>可通过设置<code>{display:block}</code>将元素转换为块级元素</p>
+<h2 id="内联元素"><a href="#内联元素" class="headerlink" title="内联元素"></a>内联元素</h2><h3 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h3><ol>
+<li><p>和其他元素在一行</p>
+</li>
+<li><p>元素的高度，宽度，行高，顶和底的边框，顶和底的内外边距不可改变<strong>（本人在chrome测试，顶和底的边框以及内边距如果设置了颜色，会显示出来，但不占用实际位置，而且会挡住上方的元素，但不会挡住下方的元素）</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>这是一个div<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"sp"</span>&gt;</span>这是一个span<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>这是一个div<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span>&gt;</span>这是一个span<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.sp</span> &#123;</span></span><br><span class="line">        background-color: coral;</span><br><span class="line">        padding-top: 10px;</span><br><span class="line">        padding-bottom: 10px;</span><br><span class="line">        border-top: 5px solid green;</span><br><span class="line">        border-bottom: 5px solid green;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<img src="/2020/8/17/html元素分类/inline.png" title="inline test">
+</li>
+<li><p>元素的宽度就是它所包含的文字或图片的宽度，不可改变。</p>
+</li>
+</ol>
+<h3 id="举例-1"><a href="#举例-1" class="headerlink" title="举例"></a>举例</h3><table>
+<thead>
+<tr>
+<th align="center">标签</th>
+<th align="center">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>&lt;a&gt;</code></td>
+<td align="center">锚</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;br&gt;</code></td>
+<td align="center">换行</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;i&gt;</code></td>
+<td align="center">斜体文本效果</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;span&gt;</code></td>
+<td align="center">组合文档中的行内元素</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;strong&gt;</code></td>
+<td align="center">语气更强的强调的内容</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;cite&gt;</code></td>
+<td align="center">引用进行定义</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;code&gt;</code></td>
+<td align="center">定义计算机代码文本</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;em&gt;</code></td>
+<td align="center">定义为强调的内容</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;label&gt;</code></td>
+<td align="center">为 input 元素定义标注</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;q&gt;</code></td>
+<td align="center">定义短的引用</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;small&gt;</code></td>
+<td align="center">呈现小号字体效果</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;var&gt;</code></td>
+<td align="center">定义变量</td>
+</tr>
+</tbody></table>
+<h3 id="转换-1"><a href="#转换-1" class="headerlink" title="转换"></a>转换</h3><p>可通过设置<code>{display:inline}</code>将元素转换为内联元素</p>
+<h2 id="内联块级元素"><a href="#内联块级元素" class="headerlink" title="内联块级元素"></a>内联块级元素</h2><h3 id="特点-2"><a href="#特点-2" class="headerlink" title="特点"></a>特点</h3><ol>
+<li>和其他元素在一行上</li>
+<li>可以设置高度，宽度，行高，边框，内外边距。</li>
+</ol>
+<h3 id="举例-2"><a href="#举例-2" class="headerlink" title="举例"></a>举例</h3><table>
+<thead>
+<tr>
+<th align="center">标签</th>
+<th align="center">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>&lt;img&gt;</code></td>
+<td align="center">定义图像</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;input&gt;</code></td>
+<td align="center">定义输入域</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;select&gt;</code></td>
+<td align="center">定义下拉选项列表</td>
+</tr>
+</tbody></table>
+<h3 id="转换-2"><a href="#转换-2" class="headerlink" title="转换"></a>转换</h3><p>可通过设置<code>{display:inline-block}</code>将元素转换为内联块级元素</p>
+<p>在实际开发过程中，要根据需求灵活转换</p>
+
+        </section>
+
+        
+        <section class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>作者:</span>
+                <span>杨浩然</span>
+            </p>
+            
+            
+            <p class="copyright-item">
+                <span>原文地址:</span>
+                <span><a href="https://YHRmaple.github.io/2020/8/17/html元素分类/">https://YHRmaple.github.io/2020/8/17/html元素分类/</a></span>
+            </p>
+            
+            
+            <p class="copyright-item">
+                <span>许可:</span>
+                <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+            </p>
+            
+            
+
+        </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                    <a href="/tags/前端/"># 前端</a>
+                    
+                    <a href="/tags/css/"># css</a>
+                    
+                    <a href="/tags/html/"># html</a>
+                    
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">主页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/8/13/vue中的scoped和深度作用选择器/">vue中的scoped和深度作用选择器</a>
+            
+        </section>
+
+
+    </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 杨浩然 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
