@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="杨浩然的博客">
+
+
+
+<title>js颜色格式rgb与16进制转换 | 杨浩然的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Yang Haoran&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Yang Haoran&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 导航</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+    <div id="post-toc" class="post-toc">
+        <span class="post-toc-title">目录</span>
+        <div class="post-toc-content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#rgb格式转换为十六进制格式"><span class="toc-text">rgb格式转换为十六进制格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#十六进制转换为rgb格式"><span class="toc-text">十六进制转换为rgb格式</span></a></li></ol>
+        </div>
+    </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">js颜色格式rgb与16进制转换</h1>
+            
+            <div class="post-meta">
+                
+                作者: <a itemprop="author" rel="author" href="/">杨浩然</a>
+                
+
+                
+                <span class="post-time">
+                    日期: <a href="#">September 14, 2020&nbsp;&nbsp;13:34:06</a>
+                </span>
+                
+                
+                <span class="post-category">
+                    分类:
+                    
+                    <a href="/categories/前端/">前端</a>
+                    
+                </span>
+                
+            </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h2 id="rgb格式转换为十六进制格式"><a href="#rgb格式转换为十六进制格式" class="headerlink" title="rgb格式转换为十六进制格式"></a>rgb格式转换为十六进制格式</h2><p>关键函数<code>Number(str).toString(16)</code>，将<code>str</code>转换为<code>number</code>格式，再用<code>toString(16)</code>转换为16进制字符串</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rgb2hex</span>(<span class="params">rgb</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> rgbRep = <span class="regexp">/^(?:rgb|RGB)\((\d&#123;1,3&#125;),(\d&#123;1,3&#125;),(\d&#123;1,3&#125;)\)/</span>	<span class="comment">// 匹配rgb字符串</span></span><br><span class="line">    <span class="keyword">if</span> (!rgbRep.test(rgb)) &#123;</span><br><span class="line">        <span class="keyword">return</span> rgb	  <span class="comment">// 格式不对返回原字符串</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 将rgb格式中的数字为16进制格式的函数</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">hex</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> str &lt; <span class="number">16</span> ? <span class="string">"0"</span> + <span class="built_in">Number</span>(str).toString(<span class="number">16</span>) : <span class="built_in">Number</span>(str).toString(<span class="number">16</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> rgb.replace(rgbRep, <span class="function"><span class="keyword">function</span> (<span class="params">$<span class="number">0</span>, $<span class="number">1</span>, $<span class="number">2</span>, $<span class="number">3</span></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"#"</span> + hex($<span class="number">1</span>) + hex($<span class="number">2</span>) + hex($<span class="number">3</span>)	 <span class="comment">// 使用了正则表达式的捕获组</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="十六进制转换为rgb格式"><a href="#十六进制转换为rgb格式" class="headerlink" title="十六进制转换为rgb格式"></a>十六进制转换为rgb格式</h2><p>关键函数<code>parseInt(&quot;0x&quot; + s)</code>，告诉<code>parseInt()</code>函数s为16进制</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hex2rgb</span>(<span class="params">hex</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> hexRep = <span class="regexp">/^#([0-9a-fA-F]&#123;3&#125;|[0-9a-fA-F]&#123;6&#125;)$/</span>    <span class="comment">// 匹配颜色16进制字符串</span></span><br><span class="line">    <span class="keyword">if</span> (!hexRep.test(hex)) &#123;</span><br><span class="line">        <span class="keyword">return</span> hex</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        hex = hex.toLowerCase()    <span class="comment">// 转换为小写</span></span><br><span class="line">        <span class="comment">// 如果只有三位（#fff），转换成六位(#ffffff)</span></span><br><span class="line">        <span class="keyword">if</span> (hex.length === <span class="number">4</span>) &#123;</span><br><span class="line">            <span class="keyword">let</span> hexNew = <span class="string">"#"</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">                hexNew += hex.slice(i, i + <span class="number">1</span>).concat(hex.slice(i, i + <span class="number">1</span>))</span><br><span class="line">            &#125;</span><br><span class="line">            hex = hexNew</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> rgb = []</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; hex.length; i += <span class="number">2</span>) &#123;</span><br><span class="line">            rgb.push(<span class="built_in">parseInt</span>(<span class="string">"0x"</span> + hex.slice(i, i + <span class="number">2</span>)))    <span class="comment">// 转换为10进制数字</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"rgb"</span> + <span class="string">"("</span> + rgb.join(<span class="string">","</span>) + <span class="string">")"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        </section>
+
+        
+        <section class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>作者:</span>
+                <span>杨浩然</span>
+            </p>
+            
+            
+            <p class="copyright-item">
+                <span>原文地址:</span>
+                <span><a href="https://YHRmaple.github.io/2020/9/14/js颜色格式rgb与16进制转换/">https://YHRmaple.github.io/2020/9/14/js颜色格式rgb与16进制转换/</a></span>
+            </p>
+            
+            
+            <p class="copyright-item">
+                <span>许可:</span>
+                <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+            </p>
+            
+            
+
+        </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                    <a href="/tags/JavaScript/"># JavaScript</a>
+                    
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">主页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/8/17/html元素分类/">html元素分类</a>
+            
+        </section>
+
+
+    </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 杨浩然 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
