@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="杨浩然的博客">
+
+
+
+<title>函数节流和防抖 | 杨浩然的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Yang Haoran&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Yang Haoran&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 导航</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+    <div id="post-toc" class="post-toc">
+        <span class="post-toc-title">目录</span>
+        <div class="post-toc-content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#节流（throttle）"><span class="toc-text">节流（throttle）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#防抖（debounce）"><span class="toc-text">防抖（debounce）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#个人理解"><span class="toc-text">个人理解</span></a></li></ol>
+        </div>
+    </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">函数节流和防抖</h1>
+            
+            <div class="post-meta">
+                
+                作者: <a itemprop="author" rel="author" href="/">杨浩然</a>
+                
+
+                
+                <span class="post-time">
+                    日期: <a href="#">September 22, 2020&nbsp;&nbsp;17:19:18</a>
+                </span>
+                
+                
+                <span class="post-category">
+                    分类:
+                    
+                    <a href="/categories/前端/">前端</a>
+                    
+                </span>
+                
+            </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h2 id="节流（throttle）"><a href="#节流（throttle）" class="headerlink" title="节流（throttle）"></a>节流（throttle）</h2><p>概念：事件高频触发，但事件绑定的回调函数在一个单位时间内只有一次生效</p>
+<p>比如（未节流）：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"time"</span>&gt;</span>时间<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"con"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> timeNow = <span class="built_in">document</span>.getElementById(<span class="string">"time"</span>)</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> con = <span class="built_in">document</span>.getElementById(<span class="string">"con"</span>)</span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">print</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>()</span></span><br><span class="line"><span class="javascript">        con.innerHTML += <span class="string">`&lt;li&gt;现在是 <span class="subst">$&#123;date&#125;</span>&lt;/li&gt;`</span></span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="javascript">    timeNow.addEventListener(<span class="string">"click"</span>, print)</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>当我们频繁点击按钮时，效果是这样的</p>
+<img src="/2020/9/22/函数节流和防抖/未节流.gif" title="未节流效果">
+
+<p>这样的弊端是，如果函数中包含了大量的DOM操作或者网络请求等，这样是非常浪费资源的，影响页面的性能。所以应进行函数节流。直接上代码（<code>&lt;body&gt;</code>部分和上面一样）：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> timeNow = <span class="built_in">document</span>.getElementById(<span class="string">"time"</span>)</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> con = <span class="built_in">document</span>.getElementById(<span class="string">"con"</span>)</span></span><br><span class="line">    </span><br><span class="line"><span class="javascript">    <span class="comment">// 节流函数</span></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">fn, delay</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> startTime = <span class="number">0</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;  <span class="comment">// 将回调函数要接收的参数用rest参数（ES6）统一存储到变量args中</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">let</span> timeNow = +<span class="keyword">new</span> <span class="built_in">Date</span>()</span></span><br><span class="line"><span class="javascript">            <span class="keyword">if</span> (timeNow - startTime &gt;= delay) &#123;</span></span><br><span class="line">                fn(...args)</span><br><span class="line">                startTime = timeNow</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">print</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>()</span></span><br><span class="line"><span class="javascript">        con.innerHTML += <span class="string">`&lt;li&gt;现在是 <span class="subst">$&#123;date&#125;</span>&lt;/li&gt;`</span></span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="javascript">    timeNow.addEventListener(<span class="string">"click"</span>, throttle(print, <span class="number">1000</span>))</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<p>该函数<code>throttle()</code>有两个参数<code>fn</code>和<code>delay</code>，<code>fn</code>为需要节流的函数，<code>delay</code>为<code>fn</code>触发的单位时间（例子中为1秒，即1秒内<code>print</code>做多执行1次）。<code>throttle()</code>返回一个匿名函数，匿名函数会将当前时间（<code>timeNow</code>）和开始时间（<code>startTime</code>）的差与<code>delay</code>比较，如果大于<code>delay</code>执行<code>fn</code>，并更新开始时间（<code>startTime</code>），如果小于则不执行。</p>
+<img src="/2020/9/22/函数节流和防抖/节流后.gif" title="节流后效果">
+
+<p>上面是用两个时间戳实现的节流，也可以使用定时器实现：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 节流函数</span></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">fn, delay</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> timer = <span class="literal">null</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">if</span> (!timer) &#123;</span></span><br><span class="line"><span class="javascript">                timer = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">                    timer = <span class="literal">null</span></span></span><br><span class="line">                    fn(...args)</span><br><span class="line">                &#125;, delay)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="防抖（debounce）"><a href="#防抖（debounce）" class="headerlink" title="防抖（debounce）"></a>防抖（debounce）</h2><p>概念：事件触发n秒后再执行回调函数，如果该事件在这n秒内再次被触发，则重新开始计时</p>
+<p>比如（未防抖）：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"mous"</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ol</span> <span class="attr">id</span>=<span class="string">"list"</span>&gt;</span><span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> mous = <span class="built_in">document</span>.getElementById(<span class="string">"mous"</span>)</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> list = <span class="built_in">document</span>.getElementById(<span class="string">"list"</span>)</span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">printInput</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> str = mous.value</span></span><br><span class="line"><span class="javascript">        list.innerHTML += <span class="string">`&lt;li&gt;<span class="subst">$&#123;str&#125;</span>&lt;/li&gt;`</span></span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="javascript">    mous.addEventListener(<span class="string">"keyup"</span>, printInput)</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>当输入内容时，效果如下：</p>
+<img src="/2020/9/22/函数节流和防抖/未防抖.gif" title="未防抖效果">
+
+<p>如果这个<code>&lt;input&gt;</code>是一个搜索框，当用户输入字符后，需要从后台返回模糊搜索结果，如果每次<code>keyup</code>都发送一次请求，http请求次数会非常多，这时需要进行防抖，即<code>keyup</code>事件触发后，等待一小段时间再执行回调，如果等待期间用户继续输入字符，就重新开始计算，代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> mous = <span class="built_in">document</span>.getElementById(<span class="string">"mous"</span>)</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> list = <span class="built_in">document</span>.getElementById(<span class="string">"list"</span>)</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 防抖函数</span></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn, delay</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> timer = <span class="literal">null</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;  <span class="comment">// 将回调函数要接收的参数用rest参数（ES6）统一存储到变量args中</span></span></span><br><span class="line">            clearTimeout(timer)</span><br><span class="line"><span class="javascript">            timer = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></span><br><span class="line">                fn(...args)</span><br><span class="line">            &#125;, delay)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">printInput</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> str = mous.value</span></span><br><span class="line"><span class="javascript">        list.innerHTML += <span class="string">`&lt;li&gt;<span class="subst">$&#123;str&#125;</span>&lt;/li&gt;`</span></span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="javascript">    mous.addEventListener(<span class="string">"keyup"</span>, debounce(printInput, <span class="number">1000</span>))</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<p>调用 <code>debounce</code> 函数时，创建一个空的定时器对象，<code>debounce</code> 函数执行返回一个匿名函数，该匿名函数执行时，首先清除定时器，而后重新创建一个定时器对象，在指定的延迟之后执行目标函数。如果在定时器等待执行期间再次执行了匿名函数，就清除这个定时器对象，重新创建一个定时器对象，直到指定延迟（delay）时间后执行目标函数。</p>
+<img src="/2020/9/22/函数节流和防抖/防抖后.gif" title="防抖效果">
+
+<h2 id="个人理解"><a href="#个人理解" class="headerlink" title="个人理解"></a>个人理解</h2><p>如果把函数看作游戏里的技能，节流可以看作给技能设置CD，释放一次后要等冷却完毕才能再次施放；而防抖可以看作给技能的施放设置读条，条没读完不能施放，读条过程中再按该技能就重新读条</p>
+<p>参考：</p>
+<p><a href="https://www.jianshu.com/p/06d29dc044b4" target="_blank" rel="noopener">https://www.jianshu.com/p/06d29dc044b4</a></p>
+<p><a href="https://www.jianshu.com/p/c8b86b09daf0" target="_blank" rel="noopener">https://www.jianshu.com/p/c8b86b09daf0</a></p>
+
+        </section>
+
+        
+        <section class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>作者:</span>
+                <span>杨浩然</span>
+            </p>
+            
+            
+            <p class="copyright-item">
+                <span>原文地址:</span>
+                <span><a href="https://YHRmaple.github.io/2020/9/22/函数节流和防抖/">https://YHRmaple.github.io/2020/9/22/函数节流和防抖/</a></span>
+            </p>
+            
+            
+            <p class="copyright-item">
+                <span>许可:</span>
+                <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+            </p>
+            
+            
+
+        </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                    <a href="/tags/前端/"># 前端</a>
+                    
+                    <a href="/tags/JavaScript/"># JavaScript</a>
+                    
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">主页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/9/14/js颜色格式rgb与16进制转换/">js颜色格式rgb与16进制转换</a>
+            
+        </section>
+
+
+    </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 杨浩然 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
