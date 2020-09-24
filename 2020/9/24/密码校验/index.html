@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="杨浩然的博客">
+
+
+
+<title>密码校验 | 杨浩然的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Yang Haoran&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Yang Haoran&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 导航</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">密码校验</h1>
+            
+            <div class="post-meta">
+                
+                作者: <a itemprop="author" rel="author" href="/">杨浩然</a>
+                
+
+                
+                <span class="post-time">
+                    日期: <a href="#">September 24, 2020&nbsp;&nbsp;21:32:37</a>
+                </span>
+                
+                
+                <span class="post-category">
+                    分类:
+                    
+                    <a href="/categories/前端/">前端</a>
+                    
+                </span>
+                
+            </div>
+            
+        </header>
+
+        <section class="post-content">
+            <p>笔试题，校验密码。规则如下：</p>
+<ol>
+<li><p><strong>密码长度8-16位</strong></p>
+</li>
+<li><p><strong>密码由大写字母、小写字母、数字和其他字符组成，且至少包含四种字符中的两种。</strong></p>
+</li>
+<li><p><strong>不能有相同长度大于2的子串重复</strong></p>
+</li>
+<li><p><strong>若只包含两种，密码强度较弱；包含3种，密码强度中等；包含4种，密码强度较强。</strong></p>
+<p>当时总想着用一个正则表达式来校验，结果钻牛角尖了没弄出来，考完后才发现没必要，逐个验证就好了。直接上代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">passwordCheck</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line"><span class="comment">// 小于8位或大于16位</span></span><br><span class="line"><span class="keyword">if</span> (str.length &lt; <span class="number">8</span> || str.length &gt; <span class="number">16</span>) &#123;</span><br><span class="line">    alert(<span class="string">"密码必须为8-16位"</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 检查是否有相同长度大于2的子串重复</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; str.length - <span class="number">3</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">let</span> temp = str.substr(i, <span class="number">3</span>) 	<span class="comment">// 只需检查是否有长度为3的子串重复即可，要注意的是，比如“23232”中的“232”也算重复出现。</span></span><br><span class="line">        <span class="keyword">if</span> (str.lastIndexOf(temp) != i) &#123; 	<span class="comment">// 查找temp最后出现的位置是否与i相等，不相等则说明temp重复出现</span></span><br><span class="line">            alert(<span class="string">"密码中不能有相同长度大于2的子串重复"</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> count = <span class="number">0</span> 	<span class="comment">// count记录“小写字母”、“大写字母”、“数字”、“其他符号”四种字符出现的种类</span></span><br><span class="line">    <span class="comment">// 是否有小写字母</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="regexp">/[a-z]/</span>.test(str)) &#123;</span><br><span class="line">        count++</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 是否有大写字符</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="regexp">/[A-Z]/</span>.test(str)) &#123;</span><br><span class="line">        count++</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 是否有数字</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="regexp">/[0-9]/</span>.test(str)) &#123;</span><br><span class="line">        count++</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 是否有其他字符</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="regexp">/[^a-zA-Z0-9]/</span>.test(str)) &#123;</span><br><span class="line">        count++</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 根据count返回提示</span></span><br><span class="line">    <span class="keyword">if</span> (count &lt; <span class="number">2</span>) &#123;</span><br><span class="line">        alert(<span class="string">"您的密码必须含有“小写字母”、“大写字母”、“数字”、“其他符号”中的任意两种"</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">switch</span> (count) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">            alert(<span class="string">"合格，密码强度较弱"</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">            alert(<span class="string">"合格，密码强度中等"</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">            alert(<span class="string">"合格，密码强度较强"</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+
+        </section>
+
+        
+        <section class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>作者:</span>
+                <span>杨浩然</span>
+            </p>
+            
+            
+            <p class="copyright-item">
+                <span>原文地址:</span>
+                <span><a href="https://YHRmaple.github.io/2020/9/24/密码校验/">https://YHRmaple.github.io/2020/9/24/密码校验/</a></span>
+            </p>
+            
+            
+            <p class="copyright-item">
+                <span>许可:</span>
+                <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+            </p>
+            
+            
+
+        </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                    <a href="/tags/前端/"># 前端</a>
+                    
+                    <a href="/tags/JavaScript/"># JavaScript</a>
+                    
+                    <a href="/tags/笔试/"># 笔试</a>
+                    
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">主页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/9/22/函数节流和防抖/">函数节流和防抖</a>
+            
+        </section>
+
+
+    </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 杨浩然 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
